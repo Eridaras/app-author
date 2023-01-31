@@ -30,7 +30,6 @@ public class AuthorRepositoryResource {
 
     @GET
     public List<Author> list() {
-        System.out.println("esta entrando");
         return authorRepository.listAll();
     }
 
@@ -58,6 +57,7 @@ public class AuthorRepositoryResource {
     @Path("{id}")
     @Transactional
     public Author update(@PathParam("id") Integer id, Author author){
+        System.out.println("Entramos al Updata" + author);
         if(author.getFirst_name() == null || author.getLast_name()==null){
             throw new WebApplicationException("El nombre o apellido del Author no se tuvo respuesta ", 422);
         }
