@@ -1,7 +1,12 @@
 plugins {
     id 'java'
+    id 'io.quarkus' version '2.16.0.Final'
+    id 'application'
+    id 'io.freefair.lombok' version "5.3.3.3"
 }
-
+ext{
+    quarkusversion='2.16.0.Final'
+}
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -10,10 +15,23 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation  enforcedPlatform("io.quarkus.platform:quarkus-bom:${project.quarkusversion}")
+    implementation group: 'io.quarkus', name: 'quarkus-resteasy'
+    implementation group: 'io.quarkus', name: 'quarkus-arc'
+    implementation group: 'io.quarkus', name: 'quarkus-jdbc-postgresql'
+    implementation group: 'io.quarkus', name: 'quarkus-resteasy-jackson'
+    implementation group: 'io.quarkus', name: 'quarkus-hibernate-orm-panache'
+    //POSTGRESQL
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
+
+
 }
 
-test {
-    useJUnitPlatform()
+application{
+    mainClassName = 'com.distribuida.Main'
+}
+sourceSets {
+    main {
+        output.resourcesDir = file("${buildDir}/classes/java/main")
+    }
 }
